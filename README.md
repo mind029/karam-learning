@@ -1,4 +1,4 @@
-# karam-learning
+# karma-learning
 
 > A Vue.js project
 
