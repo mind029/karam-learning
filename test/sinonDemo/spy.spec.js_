@@ -1,0 +1,91 @@
+
+/**
+ * Sinon.js spy 函数 使用Case
+ * 文档地址：https://sinonjs.org/releases/v6.1.4/spies/
+ */
+describe('Sinon.js spy 函数 ', () => {
+  /**
+   * 用法1：像一个普通函数一样调用 sinon.spy
+   */
+  describe('用法1：像一个普通函数一样调用 sinon.spy', () => {
+    it('用法1：像一个普通函数一样调用 sinon.spy', () => {
+      // 创建一个spy函数
+      const spy = sinon.spy()
+      // 调用1次
+      spy('Hello', 'World')
+      // 调用2次
+      spy('2')
+      // 断言 第一次调用传入的参数
+      expect(spy.firstCall.args).to.deep.equal(['Hello', 'World'])
+      // 断言 第二次调用传入的参数
+      expect(spy.secondCall.args).to.deep.equal(['2'])
+    })
+  })
+
+  /**
+   * 用法2：代理一个普通的函数
+   */
+  describe('用法2：代理一个普通的函数', () => {
+    // 全局
+    let spy
+    let res
+
+    // 普通函数
+    function myFunc (val) {
+      return val
+    }
+
+    before(() => {
+      // 代理 myFunc 函数，myFunc的功能不会被影响
+      spy = sinon.spy(myFunc)
+      // 调用 代理函数 spy，传入参数 mind
+      res = spy('mind')
+    })
+
+    // 测试用例
+    it('# called 判断 函数是否被调用过', () => {
+      // 断言 spy 函数 被调用过
+      expect(spy.called).to.be.true
+    })
+
+    it('# myFunc 函数返回值 为 mind', () => {
+      // 断言 myFunc 的功能是否改变
+      expect(res).to.equal('mind')
+    })
+
+    it('# 函数输入参数为 mind', () => {
+      // 断言参数
+      expect(spy.firstCall.args).to.deep.equal(['mind'])
+    })
+  })
+
+  /**
+   * 用法3：代理对象的方法
+   * 官方建议是 一个个来代理。不建议全部代理
+   */
+  describe('用法3：代理一个对象方法', () => {
+    let User = {
+      name: 'mind',
+      saiHi (time) {
+        console.log('i am ', this.name, time)
+      }
+    }
+
+    before(() => {
+      // 代理对象
+      sinon.spy(User, 'saiHi')
+      // 调用了一次对象方法
+      User.saiHi(Date.now())
+    })
+
+    after(() => {
+      // 清空数据
+      User.saiHi.restore()
+      console.log('User.saiHi.calledOnce', User.saiHi.calledOnce)
+    })
+
+    it(' User 对象的方法被调用了一次 ', () => {
+      expect(User.saiHi.calledOnce).to.be.true
+    })
+  })
+})

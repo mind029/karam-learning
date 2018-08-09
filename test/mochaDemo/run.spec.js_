@@ -1,0 +1,66 @@
+// mocha 生命周期介绍
+describe('# 生命周期介绍', () => {
+  /**
+   * 当前 describe 测试套件 执行 测试case 前 会调用 该 before 函数
+   */
+  before(() => {
+    console.log('最外层 最先执行 before ')
+  })
+
+  /**
+   * 当前 describe 测试套件 执行 测试case 跑完之后  会调用 该 before 函数
+   */
+  after(() => {
+    console.log('最外层 最后 after ')
+  })
+
+  describe('# 1th 测试套件', () => {
+    before(() => {
+      console.log('1th 测试套件 before ')
+    })
+
+    after(() => {
+      console.log('1th 测试套件 after ')
+    })
+
+    it('1th 测试用例1', () => {
+      expect(true).to.be.true
+    })
+
+    it('1th 测试用例2 需要延迟 100毫秒', (done) => {
+      setTimeout(() => {
+        expect(true).to.be.true
+        done()
+      }, 100)
+    })
+
+    it('1th 测试用例3', () => {
+      expect(true).to.be.true
+    })
+  })
+
+  describe('# 2th 测试套件', () => {
+    before(() => {
+      console.log('2th 测试套件 before ')
+    })
+
+    after(() => {
+      console.log('2th 测试套件 after ')
+    })
+
+    it('2th 测试用例 1', () => {
+      expect(true).to.be.true
+    })
+
+    it('2th 测试用例 2 需要延迟 100ms', (done) => {
+      setTimeout(() => {
+        expect(true).to.be.true
+        done()
+      }, 100)
+    })
+
+    it('1th 测试用例 3', () => {
+      expect(true).to.be.true
+    })
+  })
+})

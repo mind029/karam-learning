@@ -1,0 +1,16 @@
+/**
+ * 测试框架 mocha 使用
+ * 项目地址：https://mochajs.org/
+ */
+
+// describe 块称为"测试套件"（test suite），表示一组相关的测试。
+describe('我的名称叫做测试套件', () => {
+  // it块 称为"测试用例"（test case），表示一个单独的测试，是测试的最小单位。
+  it('我的名称叫做测试用例：1', () => {
+    expect(true).to.be.true
+  })
+
+  it('我的名称叫做测试用例：2', () => {
+    expect(1).to.be.equal(1)
+  })
+})
