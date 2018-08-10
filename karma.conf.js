@@ -8,13 +8,10 @@ module.exports = function (config) {
     frameworks: ['mocha','sinon-chai'],
     // 匹配测试文件
     files: [
-      // 'test/**/*.spec.js'
-      // JavaScript模块测试\
-      'test/mochaDemo/**/*.spec.js',
       // 'test/sinonDemo/**/*.spec.js',
-      // 'test/unit/specs/axios/axiosTest.spec.js'
-      // 'test/unit/specs/demo1/**/*.spec.js',
-      // 'test/unit/specs/demo2/**/*.spec.js'
+      // 'test/mochaDemo/**/*.spec.js',
+      'test/vueDemo/**/*.spec.js',
+      // 'test/apiDemo/**/*.spec.js'
     ],
     // 预处理器
     preprocessors: {
@@ -26,7 +23,7 @@ module.exports = function (config) {
     reporters: ['spec', 'coverage'],
     client: {
       mocha: {
-        timeout:10000
+        timeout:100000
       }
     },
     // 要将代码覆盖率设置为Karma，我们可以使用karma-coverage插件
@@ -37,6 +34,5 @@ module.exports = function (config) {
         { type: 'text-summary' }
       ]
     }
-
   })
 }

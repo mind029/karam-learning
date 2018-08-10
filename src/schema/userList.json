@@ -1,0 +1,64 @@
+{
+  "$id": "userList.json",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "page": {
+      "$id": "/properties/page",
+      "type": "integer",
+      "title": "页数"
+    },
+    "per_page": {
+      "$id": "/properties/per_page",
+      "type": "integer",
+      "title": "当前记录数"
+    },
+    "total": {
+      "$id": "/properties/total",
+      "type": "integer",
+      "title": "总记录数"
+    },
+    "total_pages": {
+      "$id": "/properties/total_pages",
+      "type": "integer",
+      "title": "总页数"
+    },
+    "data": {
+      "$id": "/properties/data",
+      "type": "array",
+      "items": {
+        "$id": "/properties/data/items",
+        "type": "object",
+        "properties": {
+          "id": {
+            "$id": "/properties/data/items/properties/id",
+            "type": "integer",
+            "title": "用户id"
+          },
+          "first_name": {
+            "$id": "/properties/data/items/properties/first_name",
+            "type": "string",
+            "title": "用户 first_name "
+          },
+          "last_name": {
+            "$id": "/properties/data/items/properties/last_name",
+            "type": "string",
+            "title": "用户 last_name "
+          },
+          "avatar": {
+            "$id": "/properties/data/items/properties/avatar",
+            "type": "string",
+            "title": "头像"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "page",
+    "per_page",
+    "total",
+    "total_pages",
+    "data"
+  ]
+}

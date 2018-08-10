@@ -1,0 +1,117 @@
+describe('Sinon.js stub 函数 ', () => {
+  /**
+   * 用法1：替换对象的方法,什么也不做
+   */
+  describe('# 用法1：替换对象的方法，什么也不做', () => {
+    let stub
+    let res
+    // 全局
+    let User = {
+      name: 'mind',
+      saiHi (val) {
+        console.log('i am ', this.name, val)
+        return val
+      }
+    }
+
+    before(() => {
+      stub = sinon.stub(User, 'saiHi')
+      // 调用一次
+      res = User.saiHi(123)
+    })
+
+    // 清除替换
+    after(() => {
+      stub.restore()
+    })
+
+    it(' User.saiHi 函数被调用过 ', () => {
+      expect(stub.called).to.be.true
+    })
+
+    it(' User.saiHi 返回值 是 undefined ', () => {
+      console.log('res', res)
+      expect(res).to.be.undefined
+    })
+  })
+
+  /**
+   * 用法2：替换方法并且返回 Promise 自定义值
+   */
+  describe('# 用法2：替换方法并且返回 Promise 自定义值', () => {
+    // 测试对象
+    let stub
+    let result
+    let User = {
+      name: 'mind',
+      sayHi (val) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve({id: 1, name: '测试的'})
+          }, 500)
+        })
+      }
+    }
+
+    before(async () => {
+      // 替换返回值
+      stub = sinon.stub(User, 'sayHi').resolves({id: 2, name: 'mind'})
+      result = await User.sayHi()
+    })
+
+    after(() => {
+      stub.restore()
+    })
+
+    it(` 返回值将会是 {id: 2, name: 'mind'}  `, async () => {
+      console.log('result', result)
+      expect(result).to.deep.equal({id: 2, name: 'mind'})
+    })
+  })
+
+  /**
+   * 用法3：替换成自己的函数 ，加入一些 其他功能
+   */
+  describe('# 用法3：替换成自己的函数 ，加入一些 其他功能 ', () => {
+    // 测试对象
+    let stub
+    let result
+    let User = {
+      name: 'mind',
+      sayHi (val) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve({id: 1, name: '测试的'})
+          }, 500)
+        })
+      }
+    }
+
+    before(async () => {
+      let fn = function () {
+        console.log('hello world--------')
+        console.log('this.name', this.name)
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve({id: 1, name: '测试的'})
+          }, 500)
+        })
+      }
+      // 替换返回值
+      stub = sinon.stub(User, 'sayHi').callsFake(fn)
+      result = await User.sayHi()
+    })
+
+    after(() => {
+      stub.restore()
+    })
+
+    it(' User 对象的 User.sayHi() 方法被调用了一次 ', () => {
+      expect(User.sayHi.calledOnce).to.be.true
+    })
+
+    it(` 返回值将会是 {id: 1, name: '测试的'}  `, async () => {
+      expect(result).to.deep.equal({id: 1, name: '测试的'})
+    })
+  })
+})

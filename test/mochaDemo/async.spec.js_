@@ -1,6 +1,9 @@
 // import flushPromises from 'flush-promises'
 
 describe('mocha处理异步函数的几种方法', () => {
+  /**
+   * 第一种 callback
+   */
   describe('第一种 callback 的异步函数：在回调函数里面done ', (done) => {
     let User = {
       sayHi (callback) {
@@ -20,6 +23,9 @@ describe('mocha处理异步函数的几种方法', () => {
     })
   })
 
+  /**
+   * 第2种 async/await
+   */
   describe('第二种 返回 Promise 的异步函数，通过 async/await，或者 flushPromises 处理', () => {
     let User = {
       sayHi () {
